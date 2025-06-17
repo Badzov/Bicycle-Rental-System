@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D79A7ECD-A091-4402-AA8C-E81A4132FBE5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SystemOperations</RootNamespace>
+    <AssemblyName>SystemOperations</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="KreirajIznajmljivanjeSO.cs" />
+    <Compile Include="KreirajStavkaIznajmljivanjaSO.cs" />
+    <Compile Include="KreirajBiciklaSO.cs" />
+    <Compile Include="ObrisiBiciklaSO.cs" />
+    <Compile Include="ObrisiIznajmljivanjeSO.cs" />
+    <Compile Include="ObrisiStavkaIznajmljivanjaSO.cs" />
+    <Compile Include="PretraziBiciklaSO.cs" />
+    <Compile Include="PromeniIznajmljivanjeSO.cs" />
+    <Compile Include="PromeniStavkaIznajmljivanjaSO.cs" />
+    <Compile Include="PromeniBiciklaSO.cs" />
+    <Compile Include="UbaciAutomatSaLokacijomSO.cs" />
+    <Compile Include="UbaciIznajmljivanjeSO.cs" />
+    <Compile Include="UbaciStavkaIznajmljivanjaSO.cs" />
+    <Compile Include="UbaciAutomatSO.cs" />
+    <Compile Include="KreirajPoslovniPartnerSO.cs" />
+    <Compile Include="UbaciBiciklaSO.cs" />
+    <Compile Include="UbaciMestoSO.cs" />
+    <Compile Include="UbaciPoslovniPartnerSO.cs" />
+    <Compile Include="ObrisiPoslovniPartnerSO.cs" />
+    <Compile Include="PretraziPoslovniPartnerSO.cs" />
+    <Compile Include="PromeniPoslovniPartnerSO.cs" />
+    <Compile Include="UbaciLokacijaSO.cs" />
+    <Compile Include="VratiListuBiciklaSO.cs" />
+    <Compile Include="VratiListuIznajmljivanjeSO.cs" />
+    <Compile Include="VratiListuPoslovniPartnerSO.cs" />
+    <Compile Include="VratiListuSviAutomatSO.cs" />
+    <Compile Include="SystemOperationBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VratiListuSviStavkaIznajmljivanjaSO.cs" />
+    <Compile Include="VratiListuSviIznajmljivanjeSO.cs" />
+    <Compile Include="VratiListuSviLokacijaSO.cs" />
+    <Compile Include="VratiListuSviBiciklaSO.cs" />
+    <Compile Include="VratiListuSviMestoSO.cs" />
+    <Compile Include="VratiListuSviPoslovniPartnerSO.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{97cf2e7f-9fcc-48fc-85e5-03e2a1b1e390}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{3cc0f3a0-2a0d-44ef-8d38-848d7d3d32f3}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{4F3DBE2A-0DA2-466C-9E54-4DC83BC2349B}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
