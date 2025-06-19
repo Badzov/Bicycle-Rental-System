@@ -32,14 +32,11 @@ namespace Common
         VratiListuBicikla,
         VratiListuSviAutomat,
         VratiListuSviIznajmljivanje,
-        KreirajStavkaIznajmljivanja,
-        ObrisiStavkaIznajmljivanja,
-        PromeniStavkaIznajmljivanja,
-        UbaciStavkaIznajmljivanja,
         ObrisiIznajmljivanje,
         KreirajIznajmljivanje,
         UbaciIznajmljivanje,
         PromeniIznajmljivanje,
-        VratiListuIznajmljivanje
+        VratiListuIznajmljivanje,
+        PretraziIznajmljivanje
     }
 }

@@ -33,8 +33,8 @@ namespace Domain
         public Dictionary<string, object> SearchableProperties => new Dictionary<string, object>
         {
             { "idIznajmljivanje", IdIznajmljivanje },
-            { "cenaNajma", CenaNajma },
-            { "idBicikla", Bicikla.IdBicikla },
+            /*{ "cenaNajma", CenaNajma },*/
+            { "idBicikla", Bicikla?.IdBicikla },
         };
 
 

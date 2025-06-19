@@ -146,8 +146,6 @@ namespace KorisnickiInterfejs.GUIControllers
                 iznajmljivanja.CmbBicikla.Width = 80;
                 iznajmljivanja.BtnUbaciStavka.Location = new System.Drawing.Point(iznajmljivanja.BtnUbaciStavka.Location.X + 12, iznajmljivanja.BtnUbaciStavka.Location.Y);
                 iznajmljivanja.BtnObrisiStavka.Location = new System.Drawing.Point(iznajmljivanja.BtnObrisiStavka.Location.X - 20, iznajmljivanja.BtnObrisiStavka.Location.Y);
-                iznajmljivanja.BtnKreirajStavka.Width = 51;
-                iznajmljivanja.BtnKreirajStavka.Location = new System.Drawing.Point(iznajmljivanja.BtnKreirajStavka.Location.X + 20, iznajmljivanja.BtnKreirajStavka.Location.Y);
             };
         }
 
@@ -181,19 +179,19 @@ namespace KorisnickiInterfejs.GUIControllers
                 iznajmljivanja.CmbBicikla.Width = 148;
                 iznajmljivanja.BtnUbaciStavka.Location = new System.Drawing.Point(52, 122);
                 iznajmljivanja.BtnObrisiStavka.Location = new System.Drawing.Point(168, 122);
-                iznajmljivanja.BtnKreirajStavka.Width = 71;
-                iznajmljivanja.BtnKreirajStavka.Location = new System.Drawing.Point(194, 14);
             };
         }
 
         internal void PrikaziPoslovniPartneri(FrmMain frmMain)
         {
+            HandleIznajmljivanjaSelectionChangedBug(frmMain);
             frmMain.PanelMain.Controls.Clear();
             frmMain.PanelMain.Controls.Add(new UCPoslovniPartneri());
             if (frmMain.PanelMenu.Width == 100)
             {
                 StretchMainPanel(frmMain);
-            } else
+            }
+            else
             {
                 ShrinkMainPanel(frmMain);
             }
@@ -201,6 +199,7 @@ namespace KorisnickiInterfejs.GUIControllers
 
         internal void PrikaziBicikle(FrmMain frmMain)
         {
+            HandleIznajmljivanjaSelectionChangedBug(frmMain);
             frmMain.PanelMain.Controls.Clear();
             frmMain.PanelMain.Controls.Add(new UCBicikle());
             if (frmMain.PanelMenu.Width == 100)
@@ -215,6 +214,7 @@ namespace KorisnickiInterfejs.GUIControllers
 
         internal void PrikaziPocetna(FrmMain frmMain)
         {
+            HandleIznajmljivanjaSelectionChangedBug(frmMain);
             frmMain.PanelMain.Controls.Clear();
             frmMain.PanelMain.Controls.Add(new UCPocetna());
             if (frmMain.PanelMenu.Width == 100)
@@ -229,6 +229,7 @@ namespace KorisnickiInterfejs.GUIControllers
 
         internal void PrikaziIznajmljivanja(FrmMain frmMain)
         {
+            HandleIznajmljivanjaSelectionChangedBug(frmMain);
             frmMain.PanelMain.Controls.Clear();
             frmMain.PanelMain.Controls.Add(new UCIznajmljivanja());
             if (frmMain.PanelMenu.Width == 100)
@@ -238,6 +239,17 @@ namespace KorisnickiInterfejs.GUIControllers
             else
             {
                 ShrinkMainPanel(frmMain);
+            }
+        }
+
+        private static void HandleIznajmljivanjaSelectionChangedBug(FrmMain frmMain)
+        {
+            var currentControl = frmMain.PanelMain.Controls[0];
+
+            if (currentControl is UCIznajmljivanja iznajmljivanjaControl)
+            {
+                iznajmljivanjaControl.DgvIznajmljivanja.SelectionChanged -= iznajmljivanjaControl.dgvIznajmljivanja_SelectionChanged;
+                iznajmljivanjaControl.DgvStavke.SelectionChanged -= iznajmljivanjaControl.dgvStavke_SelectionChanged;
             }
         }
     }

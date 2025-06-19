@@ -17,6 +17,12 @@ namespace SystemOperations
             try
             {
                 Result = repository.GetAll(new StavkaIznajmljivanja()).OfType<StavkaIznajmljivanja>().ToList();
+
+                List<Bicikla> bicikle = repository.GetAll(new Bicikla()).OfType<Bicikla>().ToList();
+                foreach (var stavka in Result)
+                {
+                    stavka.Bicikla = bicikle.FirstOrDefault(b => b.IdBicikla == stavka.idBicikla);
+                }
             }
             catch (Exception ex)
             {

@@ -37,7 +37,6 @@ namespace KorisnickiInterfejs.UserControls
             this.lblStavke = new System.Windows.Forms.Label();
             this.dgvStavke = new System.Windows.Forms.DataGridView();
             this.panelStavke = new System.Windows.Forms.Panel();
-            this.btnKreirajStavka = new System.Windows.Forms.Button();
             this.panelIznajmljivanjaControls = new System.Windows.Forms.Panel();
             this.lblAutomat = new System.Windows.Forms.Label();
             this.cmbAutomati = new System.Windows.Forms.ComboBox();
@@ -151,7 +150,6 @@ namespace KorisnickiInterfejs.UserControls
             this.panelStavke.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.panelStavke.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panelStavke.BackColor = System.Drawing.Color.White;
-            this.panelStavke.Controls.Add(this.btnKreirajStavka);
             this.panelStavke.Controls.Add(this.lblStavke);
             this.panelStavke.Controls.Add(this.dgvStavke);
             this.panelStavke.Location = new System.Drawing.Point(395, 15);
@@ -159,25 +157,6 @@ namespace KorisnickiInterfejs.UserControls
             this.panelStavke.Padding = new System.Windows.Forms.Padding(20, 50, 20, 20);
             this.panelStavke.Size = new System.Drawing.Size(285, 240);
             this.panelStavke.TabIndex = 5;
-            // 
-            // btnKreirajStavka
-            // 
-            this.btnKreirajStavka.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.btnKreirajStavka.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(11)))), ((int)(((byte)(97)))));
-            this.btnKreirajStavka.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnKreirajStavka.FlatAppearance.BorderSize = 0;
-            this.btnKreirajStavka.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(8)))), ((int)(((byte)(138)))));
-            this.btnKreirajStavka.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(75)))), ((int)(((byte)(8)))), ((int)(((byte)(138)))));
-            this.btnKreirajStavka.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKreirajStavka.Font = new System.Drawing.Font("Arial Rounded MT Bold", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKreirajStavka.ForeColor = System.Drawing.Color.White;
-            this.btnKreirajStavka.Location = new System.Drawing.Point(194, 14);
-            this.btnKreirajStavka.Name = "btnKreirajStavka";
-            this.btnKreirajStavka.Size = new System.Drawing.Size(71, 22);
-            this.btnKreirajStavka.TabIndex = 44;
-            this.btnKreirajStavka.Text = "Kreiraj";
-            this.btnKreirajStavka.UseVisualStyleBackColor = false;
-            this.btnKreirajStavka.Click += new System.EventHandler(this.btnKreirajStavka_Click);
             // 
             // panelIznajmljivanjaControls
             // 
@@ -473,7 +452,6 @@ namespace KorisnickiInterfejs.UserControls
         private System.Windows.Forms.Label lblStavke;
         private System.Windows.Forms.DataGridView dgvStavke;
         private System.Windows.Forms.Panel panelStavke;
-        private System.Windows.Forms.Button btnKreirajStavka;
         private System.Windows.Forms.Panel panelIznajmljivanjaControls;
         private System.Windows.Forms.DateTimePicker dtpIznajmljivanja;
         private System.Windows.Forms.Label lblDatumIznajmljivanja;
@@ -502,7 +480,6 @@ namespace KorisnickiInterfejs.UserControls
         public Label LblStavke { get => lblStavke; set => lblStavke = value; }
         public DataGridView DgvStavke { get => dgvStavke; set => dgvStavke = value; }
         public Panel PanelStavke { get => panelStavke; set => panelStavke = value; }
-        public Button BtnKreirajStavka { get => btnKreirajStavka; set => btnKreirajStavka = value; }
         public Panel PanelIznajmljivanjaControls { get => panelIznajmljivanjaControls; set => panelIznajmljivanjaControls = value; }
         public DateTimePicker DtpIznajmljivanja { get => dtpIznajmljivanja; set => dtpIznajmljivanja = value; }
         public Label LblDatumIznajmljivanja { get => lblDatumIznajmljivanja; set => lblDatumIznajmljivanja = value; }

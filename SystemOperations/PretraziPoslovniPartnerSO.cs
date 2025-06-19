@@ -23,6 +23,19 @@ namespace SystemOperations
             try
             {
                 Result = (PoslovniPartner)repository.Get(p);
+
+                if (Result != null)
+                {
+                    List<Mesto> mesta = repository.GetAll(new Mesto()).OfType<Mesto>().ToList();
+                    foreach(Mesto m in mesta)
+                    {
+                        if (Result.idMesto == m.IdMesto)
+                        {
+                            Result.Mesto = m;
+                            break;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

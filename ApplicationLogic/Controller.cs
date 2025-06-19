@@ -28,16 +28,9 @@ namespace ApplicationLogic
 
         public Automat PrijaviAutomat(Automat a)
         {
-            List<Automat> automati = VratiListuSviAutomat();
-
-            foreach (Automat automat in automati)
-            {
-                if (automat.KorisnickoIme == a.KorisnickoIme && automat.Sifra == a.Sifra)
-                {
-                    return automat;
-                }
-            }
-            return null;
+            SystemOperationBase so = new PrijaviAutomatSO(a);
+            so.ExecuteTemplate();
+            return ((PrijaviAutomatSO)so).Result;
 
         }
 
@@ -67,9 +60,9 @@ namespace ApplicationLogic
             return ((VratiListuSviLokacijaSO)so).Result;
         }
 
-        public void UbaciLokacija(Lokacija lokacija)
+        public void UbaciLokacija(Lokacija l)
         {
-            SystemOperationBase so = new UbaciLokacijaSO(lokacija);
+            SystemOperationBase so = new UbaciLokacijaSO(l);
             so.ExecuteTemplate();
         }
 
@@ -84,20 +77,7 @@ namespace ApplicationLogic
         {
             SystemOperationBase so = new VratiListuSviPoslovniPartnerSO();
             so.ExecuteTemplate();
-            List<PoslovniPartner> poslovniPartneri = ((VratiListuSviPoslovniPartnerSO)so).Result;
-            List<Mesto> mesta = VratiListuSviMesto();
-            foreach(PoslovniPartner p in poslovniPartneri)
-            {
-                foreach(Mesto m in mesta)
-                {
-                    if(p.idMesto == m.IdMesto)
-                    {
-                        p.Mesto = m;
-                        break;
-                    }
-                }
-            }
-            return poslovniPartneri;
+            return ((VratiListuSviPoslovniPartnerSO)so).Result;
         }
 
         public void UbaciPoslovniPartner(PoslovniPartner p)
@@ -118,41 +98,18 @@ namespace ApplicationLogic
             so.ExecuteTemplate();
         }
 
-        public List<PoslovniPartner> VratiListuPoslovniPartner(PoslovniPartner partner)
+        public List<PoslovniPartner> VratiListuPoslovniPartner(PoslovniPartner p)
         {
-            SystemOperationBase so = new VratiListuPoslovniPartnerSO(partner);
+            SystemOperationBase so = new VratiListuPoslovniPartnerSO(p);
             so.ExecuteTemplate();
-            List<PoslovniPartner> poslovniPartneri = ((VratiListuPoslovniPartnerSO)so).Result;
-            List<Mesto> mesta = VratiListuSviMesto();
-            foreach (PoslovniPartner p in poslovniPartneri)
-            {
-                foreach (Mesto m in mesta)
-                {
-                    if (p.idMesto == m.IdMesto)
-                    {
-                        p.Mesto = m;
-                        break;
-                    }
-                }
-            }
-            return poslovniPartneri;
+            return ((VratiListuPoslovniPartnerSO)so).Result;
         }
 
         public PoslovniPartner PretraziPoslovniPartner(PoslovniPartner p)
         {
             SystemOperationBase so = new PretraziPoslovniPartnerSO(p);
             so.ExecuteTemplate();
-            PoslovniPartner partner = ((PretraziPoslovniPartnerSO)so).Result;
-            List<Mesto> mesta = VratiListuSviMesto();
-            foreach (Mesto m in mesta)
-            {
-                if (p.Mesto.IdMesto == m.IdMesto)
-                {
-                    partner.Mesto = m;
-                    break;
-                }
-            }
-            return partner;
+            return ((PretraziPoslovniPartnerSO)so).Result;
 
         }
 
@@ -217,81 +174,14 @@ namespace ApplicationLogic
         {
             SystemOperationBase so = new VratiListuSviIznajmljivanjeSO();
             so.ExecuteTemplate();
-            List<Iznajmljivanje> iznajmljivanja = ((VratiListuSviIznajmljivanjeSO)so).Result;
-            List<PoslovniPartner> partneri = VratiListuSviPoslovniPartner();
-            List<Automat> automati = VratiListuSviAutomat();
-            List<StavkaIznajmljivanja> stavke = VratiListuSviStavkaIznajmljivanja();
-            foreach(Iznajmljivanje i in iznajmljivanja)
-            {
-                foreach(PoslovniPartner p in partneri)
-                {
-                    if (i.idPoslovniPartner == p.IdPoslovniPartner)
-                    {
-                        i.PoslovniPartner = p;
-                        break;
-                    }
-                }
-                foreach(Automat a in automati)
-                {
-                    if (i.idAutomat == a.IdAutomat)
-                    {
-                        i.Automat = a;
-                        break;
-                    }
-                }
-                foreach(StavkaIznajmljivanja si in stavke)
-                {
-                    if (i.IdIznajmljivanje == si.IdIznajmljivanje)
-                    {
-                        i.Stavke.Add(si);
-                    }
-                }
-            }
-            return iznajmljivanja;
+            return ((VratiListuSviIznajmljivanjeSO)so).Result;
         }
 
         private List<StavkaIznajmljivanja> VratiListuSviStavkaIznajmljivanja()
         {
             SystemOperationBase so = new VratiListuSviStavkaIznajmljivanjaSO();
             so.ExecuteTemplate();
-            List<StavkaIznajmljivanja> stavke = ((VratiListuSviStavkaIznajmljivanjaSO)so).Result;
-            List<Bicikla> bicikle = VratiListuSviBicikla();
-            foreach (StavkaIznajmljivanja si in stavke)
-            {
-                foreach (Bicikla b in bicikle)
-                {
-                    if (si.idBicikla == b.IdBicikla)
-                    {
-                        si.Bicikla = b;
-                        break;
-                    }
-                }
-            }
-            return stavke;
-        }
-
-        public void KreirajStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            SystemOperationBase so = new KreirajStavkaIznajmljivanjaSO(s);
-            so.ExecuteTemplate();
-        }
-
-        public void ObrisiStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            SystemOperationBase so = new ObrisiStavkaIznajmljivanjaSO(s);
-            so.ExecuteTemplate();
-        }
-
-        public void PromeniStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            SystemOperationBase so = new PromeniStavkaIznajmljivanjaSO(s);
-            so.ExecuteTemplate();
-        }
-
-        public void UbaciStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            SystemOperationBase so = new UbaciStavkaIznajmljivanjaSO(s);
-            so.ExecuteTemplate();
+            return ((VratiListuSviStavkaIznajmljivanjaSO)so).Result;
         }
 
         public void ObrisiIznajmljivanje(Iznajmljivanje i)
@@ -318,41 +208,18 @@ namespace ApplicationLogic
             so.ExecuteTemplate();
         }
 
-        public List<Iznajmljivanje> VratiListuIznajmljivanje(Iznajmljivanje iznajmljivanje)
+        public List<Iznajmljivanje> VratiListuIznajmljivanje(Iznajmljivanje i)
         {
-            SystemOperationBase so = new VratiListuIznajmljivanjeSO(iznajmljivanje);
+            SystemOperationBase so = new VratiListuIznajmljivanjeSO(i);
             so.ExecuteTemplate();
-            List<Iznajmljivanje> iznajmljivanja = ((VratiListuIznajmljivanjeSO)so).Result;
-            List<PoslovniPartner> partneri = VratiListuSviPoslovniPartner();
-            List<Automat> automati = VratiListuSviAutomat();
-            List<StavkaIznajmljivanja> stavke = VratiListuSviStavkaIznajmljivanja();
-            foreach (Iznajmljivanje i in iznajmljivanja)
-            {
-                foreach (PoslovniPartner p in partneri)
-                {
-                    if (i.idPoslovniPartner == p.IdPoslovniPartner)
-                    {
-                        i.PoslovniPartner = p;
-                        break;
-                    }
-                }
-                foreach (Automat a in automati)
-                {
-                    if (i.idAutomat == a.IdAutomat)
-                    {
-                        i.Automat = a;
-                        break;
-                    }
-                }
-                foreach (StavkaIznajmljivanja si in stavke)
-                {
-                    if (i.IdIznajmljivanje == si.IdIznajmljivanje)
-                    {
-                        i.Stavke.Add(si);
-                    }
-                }
-            }
-            return iznajmljivanja;
+            return ((VratiListuIznajmljivanjeSO)so).Result;
+        }
+
+        public Iznajmljivanje PretraziIznajmljivanje(Iznajmljivanje i)
+        {
+            SystemOperationBase so = new PretraziIznajmljivanjeSO(i);
+            so.ExecuteTemplate();
+            return ((PretraziIznajmljivanjeSO)so).Result;
         }
     }
 }

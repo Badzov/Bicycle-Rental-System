@@ -21,19 +21,14 @@ namespace KorisnickiInterfejs.UserControls
             iznajmljivanjaController.Init(this);
         }
 
-        private void dgvIznajmljivanja_SelectionChanged(object sender, EventArgs e)
+        public void dgvIznajmljivanja_SelectionChanged(object sender, EventArgs e)
         {
             iznajmljivanjaController.IznajmljivanjaSelectionChanged(this);
         }
 
-        private void dgvStavke_SelectionChanged(object sender, EventArgs e)
+        public void dgvStavke_SelectionChanged(object sender, EventArgs e)
         {
             iznajmljivanjaController.StavkeSelectionChanged(this);
-        }
-
-        private void btnKreirajStavka_Click(object sender, EventArgs e)
-        {
-            iznajmljivanjaController.KreirajStavka(this);
         }
 
         private void btnObrisiStavka_Click(object sender, EventArgs e)

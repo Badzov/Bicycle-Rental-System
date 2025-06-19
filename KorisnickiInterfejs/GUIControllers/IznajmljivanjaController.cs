@@ -92,11 +92,11 @@ namespace KorisnickiInterfejs.GUIControllers
             uCIznajmljivanja.CmbAutomati.SelectedItem = null;
         }
 
-        internal void IznajmljivanjaSelectionChanged(UCIznajmljivanja uCIznajmljivanja)
+        internal async void IznajmljivanjaSelectionChanged(UCIznajmljivanja uCIznajmljivanja)
         {
             if (uCIznajmljivanja.DgvIznajmljivanja.SelectedRows.Count > 0)
             {
-                Iznajmljivanje iznajmljivanje = (Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem;
+                Iznajmljivanje iznajmljivanje = await Communication.Instance.PretraziIznajmljivanje((Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem);
                 uCIznajmljivanja.DgvStavke.DataSource = new BindingList<StavkaIznajmljivanja>(iznajmljivanje.Stavke);
                 FormatStavkeDgv(uCIznajmljivanja);
                 uCIznajmljivanja.DtpIznajmljivanja.Value = (DateTime)iznajmljivanje.DatumIznajmljivanja;
@@ -137,41 +137,7 @@ namespace KorisnickiInterfejs.GUIControllers
             uCIznajmljivanja.DgvIznajmljivanja.CurrentCell = uCIznajmljivanja.DgvIznajmljivanja.Rows[rowIndex].Cells[1];
         }
 
-        internal async void KreirajStavka(UCIznajmljivanja uCIznajmljivanja)
-        {
-            if (uCIznajmljivanja.DgvIznajmljivanja.SelectedRows.Count < 1)
-            {
-                MessageBox.Show("Odaberite iznajmljivanje!");
-                return;
-            }
-
-            try
-            {
-                int rowIndex = uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].Index;
-                StavkaIznajmljivanja stavka = new StavkaIznajmljivanja
-                {
-                    IdIznajmljivanje = ((Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem).IdIznajmljivanje,
-                    Rb = ((Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem).Stavke.Count + 1,
-                    CenaNajma = 1,
-                    Bicikla = (Bicikla)uCIznajmljivanja.CmbBicikla.Items[0],
-                };
-
-                await Communication.Instance.KreirajStavkaIznajmljivanja(stavka);
-                MessageBox.Show("Sistem je kreirao novu stavku!");
-                await RefreshDgvIznajmljivanja(uCIznajmljivanja, rowIndex);
-            }
-            catch (SystemOperationException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            catch (SocketException ex)
-            {
-                MessageBox.Show("Greška pri povezivanju sa serverom!");
-                Console.WriteLine(">>>>>> " + ex.Message);
-            }
-        }
-
-        internal async void ObrisiStavka(UCIznajmljivanja uCIznajmljivanja)
+        internal void ObrisiStavka(UCIznajmljivanja uCIznajmljivanja)
         {
             if (uCIznajmljivanja.DgvStavke.SelectedRows.Count == 0)
             {
@@ -181,15 +147,12 @@ namespace KorisnickiInterfejs.GUIControllers
 
             try
             {
-                int rowIndex = uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].Index;
-                for (int i = 0; i < uCIznajmljivanja.DgvStavke.SelectedRows.Count; i++)
-                {
-                    StavkaIznajmljivanja stavka = (StavkaIznajmljivanja)uCIznajmljivanja.DgvStavke.SelectedRows[i].DataBoundItem;
-                    await Communication.Instance.ObrisiStavkaIznajmljivanja(stavka);
-                }
-                MessageBox.Show("Sistem je obrisao stavke!");
-                await PoredjajStavke(uCIznajmljivanja, rowIndex);
-                await RefreshDgvIznajmljivanja(uCIznajmljivanja, rowIndex);
+                StavkaIznajmljivanja stavka = (StavkaIznajmljivanja)uCIznajmljivanja.DgvStavke.SelectedRows[0].DataBoundItem;
+                uCIznajmljivanja.DgvStavke.CurrentCell = null;
+                ((BindingList<StavkaIznajmljivanja>)uCIznajmljivanja.DgvStavke.DataSource).Remove(stavka);
+                PoredjajStavke(uCIznajmljivanja);
+                uCIznajmljivanja.DgvStavke.Refresh();
+                MessageBox.Show("Sistem je obrisao stavku! Pritisnite 'Promeni' kako bi sačuvali promene!");
             }
             catch (SystemOperationException ex)
             {
@@ -202,26 +165,17 @@ namespace KorisnickiInterfejs.GUIControllers
             }
         }
 
-        private async Task PoredjajStavke(UCIznajmljivanja uCIznajmljivanja, int rowIndex)
+        private void PoredjajStavke(UCIznajmljivanja uCIznajmljivanja)
         {
-            Iznajmljivanje iznajmljivanje = (Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem;
-            for (int i = iznajmljivanje.Stavke.Count-1; i > - 1; i--)
+            int i = 1;
+            foreach(StavkaIznajmljivanja si in ((BindingList<StavkaIznajmljivanja>)uCIznajmljivanja.DgvStavke.DataSource).ToList())
             {
-                StavkaIznajmljivanja stavka = iznajmljivanje.Stavke[i];
-                stavka.NewRb = stavka.Rb + 1;
-                await Communication.Instance.PromeniStavkaIznajmljivanja(stavka);
-            }
-            await RefreshDgvIznajmljivanja(uCIznajmljivanja, rowIndex);
-            iznajmljivanje = (Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem;
-            for (int i = 0; i<iznajmljivanje.Stavke.Count; i++)
-            {
-                StavkaIznajmljivanja stavka = iznajmljivanje.Stavke[i];
-                stavka.NewRb = i + 1;
-                await Communication.Instance.PromeniStavkaIznajmljivanja(stavka);
+                si.Rb = i;
+                i++;
             }
         }
 
-        internal async void UbaciStavka(UCIznajmljivanja uCIznajmljivanja)
+        internal void UbaciStavka(UCIznajmljivanja uCIznajmljivanja)
         {
             if (uCIznajmljivanja.DgvIznajmljivanja.SelectedRows.Count == 0)
             {
@@ -234,11 +188,9 @@ namespace KorisnickiInterfejs.GUIControllers
                 return;
             }
 
-            int rowIndex = uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].Index;
-
             int cenaNajma = Int32.Parse(uCIznajmljivanja.TxtCena.Text);
             Bicikla bicikla = (Bicikla)uCIznajmljivanja.CmbBicikla.SelectedItem;
-            int rb = ((Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem).Stavke.Count + 1;
+            int rb = ((BindingList<StavkaIznajmljivanja>)uCIznajmljivanja.DgvStavke.DataSource).Count + 1;
 
             try
             {
@@ -250,9 +202,10 @@ namespace KorisnickiInterfejs.GUIControllers
                     IdIznajmljivanje = ((Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem).IdIznajmljivanje,
                 };
 
-                await Communication.Instance.UbaciStavkaIznajmljivanja(stavka);
-                MessageBox.Show("Sistem je zapamtio stavku!");
-                await RefreshDgvIznajmljivanja(uCIznajmljivanja, rowIndex);
+                ((BindingList<StavkaIznajmljivanja>)uCIznajmljivanja.DgvStavke.DataSource).Add(stavka);
+                uCIznajmljivanja.DgvStavke.CurrentCell = uCIznajmljivanja.DgvStavke.Rows[uCIznajmljivanja.DgvStavke.RowCount - 1].Cells[1];
+                uCIznajmljivanja.DgvStavke.Refresh();
+                MessageBox.Show("Sistem je dodao stavku! Pritisnite 'Promeni' kako bi sačuvali promene!");
             }
             catch (SystemOperationException ex)
             {
@@ -308,6 +261,7 @@ namespace KorisnickiInterfejs.GUIControllers
             if (((Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[0].DataBoundItem).Stavke.Count > 0)
             {
                 MessageBox.Show("Prvo obrišite sve stavke!");
+                return;
             }
 
             try
@@ -317,7 +271,7 @@ namespace KorisnickiInterfejs.GUIControllers
                     Iznajmljivanje iznajmljivanje = (Iznajmljivanje)uCIznajmljivanja.DgvIznajmljivanja.SelectedRows[i].DataBoundItem;
                     await Communication.Instance.ObrisiIznajmljivanje(iznajmljivanje);
                 }
-                MessageBox.Show("Sistem je obrisao iznajmljivanje!");
+                MessageBox.Show("Sistem je obrisao iznajmljivanja!");
                 Init(uCIznajmljivanja);
             }
             catch (SystemOperationException ex)
@@ -449,6 +403,7 @@ namespace KorisnickiInterfejs.GUIControllers
                 iznajmljivanje.DatumPovratka = uCIznajmljivanja.DtpPovratka.Value;
                 iznajmljivanje.Automat = (Automat)uCIznajmljivanja.CmbAutomati.SelectedItem;
                 iznajmljivanje.PoslovniPartner = (PoslovniPartner)uCIznajmljivanja.CmbPoslovniPartner.SelectedItem;
+                iznajmljivanje.Stavke = ((BindingList<StavkaIznajmljivanja>)uCIznajmljivanja.DgvStavke.DataSource).ToList();
 
                 await Communication.Instance.PromeniIznajmljivanje(iznajmljivanje);
                 MessageBox.Show("Sistem je zapamtio iznajmljivanje!");

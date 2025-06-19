@@ -23,8 +23,8 @@ namespace Domain
         public string Condition => "idAutomat = @IdAutomat AND idLokacija = @IdLokacija";
         public Dictionary<string, object> Parameters => new Dictionary<string, object>
         {
-            { "@IdAutomat", Automat.IdAutomat },
-            { "@IdLokacija", Lokacija.IdLokacija },
+            { "@IdAutomat", Automat?.IdAutomat },
+            { "@IdLokacija", Lokacija?.IdLokacija },
             { "@DatumPostavljanja", DatumPostavljanja },
         };
         public Dictionary<string, object> SearchableProperties => new Dictionary<string, object>

@@ -240,30 +240,6 @@ namespace KorisnickiInterfejs.ServerCommunication
             return (List<Iznajmljivanje>)await GetResult<List<Iznajmljivanje>>();
         }
 
-        internal async Task KreirajStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            await SendRequest(Operation.KreirajStavkaIznajmljivanja, s);
-            await GetResult();
-        }
-
-        internal async Task ObrisiStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            await SendRequest(Operation.ObrisiStavkaIznajmljivanja, s);
-            await GetResult();
-        }
-
-        internal async Task PromeniStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            await SendRequest(Operation.PromeniStavkaIznajmljivanja, s);
-            await GetResult();
-        }
-
-        internal async Task UbaciStavkaIznajmljivanja(StavkaIznajmljivanja s)
-        {
-            await SendRequest(Operation.UbaciStavkaIznajmljivanja, s);
-            await GetResult();
-        }
-
         internal async Task ObrisiIznajmljivanje(Iznajmljivanje i)
         {
             await SendRequest(Operation.ObrisiIznajmljivanje, i);
@@ -292,6 +268,12 @@ namespace KorisnickiInterfejs.ServerCommunication
         {
             await SendRequest<object>(Operation.VratiListuIznajmljivanje, i);
             return (List<Iznajmljivanje>)await GetResult<List<Iznajmljivanje>>();
+        }
+
+        internal async Task<Iznajmljivanje> PretraziIznajmljivanje(Iznajmljivanje i)
+        {
+            await SendRequest<object> (Operation.PretraziIznajmljivanje, i);
+            return (Iznajmljivanje)await GetResult<Iznajmljivanje>();
         }
     }
 }

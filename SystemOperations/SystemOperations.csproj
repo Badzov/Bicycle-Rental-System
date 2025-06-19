@@ -42,18 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="KreirajIznajmljivanjeSO.cs" />
-    <Compile Include="KreirajStavkaIznajmljivanjaSO.cs" />
     <Compile Include="KreirajBiciklaSO.cs" />
     <Compile Include="ObrisiBiciklaSO.cs" />
     <Compile Include="ObrisiIznajmljivanjeSO.cs" />
-    <Compile Include="ObrisiStavkaIznajmljivanjaSO.cs" />
+    <Compile Include="PretraziIznajmljivanjeSO.cs" />
     <Compile Include="PretraziBiciklaSO.cs" />
+    <Compile Include="PrijaviAutomatSO.cs" />
     <Compile Include="PromeniIznajmljivanjeSO.cs" />
-    <Compile Include="PromeniStavkaIznajmljivanjaSO.cs" />
     <Compile Include="PromeniBiciklaSO.cs" />
     <Compile Include="UbaciAutomatSaLokacijomSO.cs" />
     <Compile Include="UbaciIznajmljivanjeSO.cs" />
-    <Compile Include="UbaciStavkaIznajmljivanjaSO.cs" />
     <Compile Include="UbaciAutomatSO.cs" />
     <Compile Include="KreirajPoslovniPartnerSO.cs" />
     <Compile Include="UbaciBiciklaSO.cs" />

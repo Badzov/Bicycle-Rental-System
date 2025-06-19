@@ -185,26 +185,6 @@ namespace Server
                         response.JsonData = JsonSerializer.Serialize(resultVratiListuSviIznajmljivanje);
                         break;
 
-                    case Operation.KreirajStavkaIznajmljivanja:
-                        StavkaIznajmljivanja stavka = JsonSerializer.Deserialize<StavkaIznajmljivanja>(request.JsonData);
-                        Controller.Instance.KreirajStavkaIznajmljivanja(stavka);
-                        break;
-
-                    case Operation.ObrisiStavkaIznajmljivanja:
-                        stavka = JsonSerializer.Deserialize<StavkaIznajmljivanja>(request.JsonData);
-                        Controller.Instance.ObrisiStavkaIznajmljivanja(stavka);
-                        break;
-
-                    case Operation.PromeniStavkaIznajmljivanja:
-                        stavka = JsonSerializer.Deserialize<StavkaIznajmljivanja>(request.JsonData);
-                        Controller.Instance.PromeniStavkaIznajmljivanja(stavka);
-                        break;
-
-                    case Operation.UbaciStavkaIznajmljivanja:
-                        stavka = JsonSerializer.Deserialize<StavkaIznajmljivanja>(request.JsonData);
-                        Controller.Instance.UbaciStavkaIznajmljivanja(stavka);
-                        break;
-
                     case Operation.ObrisiIznajmljivanje:
                         Iznajmljivanje iznajmljivanje = JsonSerializer.Deserialize<Iznajmljivanje>(request.JsonData);
                         Controller.Instance.ObrisiIznajmljivanje(iznajmljivanje);
@@ -229,6 +209,12 @@ namespace Server
                         iznajmljivanje = JsonSerializer.Deserialize<Iznajmljivanje>(request.JsonData);
                         List<Iznajmljivanje> resultVratiListuIznajmljivanje = Controller.Instance.VratiListuIznajmljivanje(iznajmljivanje);
                         response.JsonData = JsonSerializer.Serialize(resultVratiListuIznajmljivanje);
+                        break;
+
+                    case Operation.PretraziIznajmljivanje:
+                        iznajmljivanje = JsonSerializer.Deserialize<Iznajmljivanje>(request.JsonData);
+                        Iznajmljivanje resultPretraziIznajmljivanje = Controller.Instance.PretraziIznajmljivanje(iznajmljivanje);
+                        response.JsonData = JsonSerializer.Serialize(resultPretraziIznajmljivanje);
                         break;
 
                     case Operation.Kraj:

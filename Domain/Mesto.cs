@@ -28,7 +28,7 @@ namespace Domain
         };
         public Dictionary<string, object> SearchableProperties => new Dictionary<string, object>
         {
-            { "naziv", Naziv },
+            { "Naziv", Naziv },
             { "Opstina", Opstina },
             { "Drzava", Drzava },
         };

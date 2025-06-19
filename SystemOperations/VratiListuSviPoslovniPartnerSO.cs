@@ -17,6 +17,12 @@ namespace SystemOperations
             try
             {
                 Result = repository.GetAll(new PoslovniPartner()).OfType<PoslovniPartner>().ToList();
+
+                List<Mesto> mesta = repository.GetAll(new Mesto()).OfType<Mesto>().ToList();
+                foreach (PoslovniPartner partner in Result)
+                {
+                    partner.Mesto = mesta.FirstOrDefault(m => m.IdMesto == partner.idMesto);
+                }
             }
             catch (Exception ex)
             {
