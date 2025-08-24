@@ -10,7 +10,7 @@ namespace SystemOperations
 {
     public abstract class SystemOperationBase
     {
-        protected IRepository<IDomainObject> repository = new GenericDbRepository();
+        protected IRepository<IEntity> repository = new GenericRepository();
         public void ExecuteTemplate()
         {
             try

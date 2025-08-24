@@ -9,13 +9,13 @@ namespace Repository
 {
     public interface IRepository<T> where T : class
     {
-        List<T> GetAll(IDomainObject obj);
-        IDomainObject Get(IDomainObject obj);
+        List<T> GetAll(IEntity obj);
+        IEntity Get(IEntity obj);
         void Add(T obj);
         int AddReturnId(T obj);
         void Update(T obj);
         void Delete(T obj);
-        List<T> Search(IDomainObject criteria);
+        List<T> Search(IEntity criteria);
         void OpenConnection();
         void CloseConnection();
         void BeginTransaction();

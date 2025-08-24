@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class StavkaIznajmljivanja : IDomainObject
+    public class StavkaIznajmljivanja : IEntity
     {
         public int Rb { get; set; }
         public double CenaNajma { get; set; }
@@ -37,8 +37,7 @@ namespace Domain
             { "idBicikla", Bicikla?.IdBicikla },
         };
 
-
-        public IDomainObject ReadObjectRow(SqlDataReader reader)
+        public IEntity ReadObjectRow(SqlDataReader reader)
         {
             StavkaIznajmljivanja si = new StavkaIznajmljivanja();
             si.IdIznajmljivanje = reader.GetInt32(reader.GetOrdinal("idIznajmljivanje"));

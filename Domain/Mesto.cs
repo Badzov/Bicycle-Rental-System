@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Mesto : IDomainObject
+    public class Mesto : IEntity
     {
         public int IdMesto { get; set; }
         public string Naziv { get; set; }
@@ -33,7 +33,7 @@ namespace Domain
             { "Drzava", Drzava },
         };
 
-        public IDomainObject ReadObjectRow(SqlDataReader reader)
+        public IEntity ReadObjectRow(SqlDataReader reader)
         {
             Mesto m = new Mesto();
             m.IdMesto = reader.GetInt32(reader.GetOrdinal("idMesto"));

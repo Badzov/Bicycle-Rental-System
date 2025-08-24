@@ -45,7 +45,7 @@
     <Compile Include="AutomatLokacija.cs" />
     <Compile Include="Bicikla.cs" />
     <Compile Include="DTOs\AutomatLokacijaDTO.cs" />
-    <Compile Include="IDomainObject.cs" />
+    <Compile Include="IEntity.cs" />
     <Compile Include="Iznajmljivanje.cs" />
     <Compile Include="Lokacija.cs" />
     <Compile Include="Mesto.cs" />

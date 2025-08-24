@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class GenericDbRepository : IRepository<IDomainObject>
+    public class GenericRepository : IRepository<IEntity>
     {
 
         private Broker broker = new Broker();
@@ -36,16 +36,16 @@ namespace Repository
             broker.Rollback();
         }
 
-        public List<IDomainObject> GetAll(IDomainObject obj)
+        public List<IEntity> GetAll(IEntity obj)
         {
-            List<IDomainObject> result = new List<IDomainObject>();
+            List<IEntity> result = new List<IEntity>();
             SqlCommand command = broker.CreateCommand();
             command.CommandText = $"SELECT * FROM {obj.TableName}";
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    IDomainObject rowObject = obj.ReadObjectRow(reader);
+                    IEntity rowObject = obj.ReadObjectRow(reader);
                     result.Add(rowObject);
                 }
             }
@@ -53,7 +53,7 @@ namespace Repository
             return result;
         }
 
-        public IDomainObject Get(IDomainObject obj)
+        public IEntity Get(IEntity obj)
         {
             SqlCommand command = broker.CreateCommand();
             command.CommandText = $"SELECT * FROM {obj.TableName} WHERE {obj.Condition}";
@@ -73,7 +73,7 @@ namespace Repository
             return null; 
         }
 
-        public void Add(IDomainObject obj)
+        public void Add(IEntity obj)
         {
             SqlCommand command = broker.CreateCommand();
             command.CommandText = $"INSERT INTO {obj.TableName} ({obj.InsertColumns}) VALUES ({obj.InsertParameters})";
@@ -87,7 +87,7 @@ namespace Repository
             command.Dispose();
         }
 
-        public int AddReturnId(IDomainObject obj)
+        public int AddReturnId(IEntity obj)
         {
             SqlCommand command = broker.CreateCommand();
             command.CommandText = $"INSERT INTO {obj.TableName} ({obj.InsertColumns}) VALUES ({obj.InsertParameters}); SELECT SCOPE_IDENTITY();";
@@ -102,7 +102,7 @@ namespace Repository
             return result;
         }
 
-        public void Delete(IDomainObject obj)
+        public void Delete(IEntity obj)
         {
             SqlCommand command = broker.CreateCommand();
             command.CommandText = $"DELETE FROM {obj.TableName} WHERE {obj.Condition}";
@@ -116,9 +116,9 @@ namespace Repository
             command.Dispose();
         }
 
-        public List<IDomainObject> Search(IDomainObject criteria)
+        public List<IEntity> Search(IEntity criteria)
         {
-            List<IDomainObject> result = new List<IDomainObject>();
+            List<IEntity> result = new List<IEntity>();
             SqlCommand command = broker.CreateCommand();
 
             var props = criteria.SearchableProperties;
@@ -155,7 +155,7 @@ namespace Repository
             {
                 while (reader.Read())
                 {
-                    IDomainObject rowObject = criteria.ReadObjectRow(reader);
+                    IEntity rowObject = criteria.ReadObjectRow(reader);
                     result.Add(rowObject);
                 }
             }
@@ -163,7 +163,7 @@ namespace Repository
             return result;
         }
 
-        public void Update(IDomainObject obj)
+        public void Update(IEntity obj)
         {
             SqlCommand command = broker.CreateCommand();
             command.CommandText = $"UPDATE {obj.TableName} SET {obj.UpdateStatement} WHERE {obj.Condition}";

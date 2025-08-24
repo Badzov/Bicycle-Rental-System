@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Domain
 {
-    public class Automat : IDomainObject
+    public class Automat : IEntity
     {
         public int IdAutomat { get; set; }
         public DateTime DatumProizvodnje { get; set; }
@@ -32,7 +32,7 @@ namespace Domain
             { "korisnickoIme", KorisnickoIme },
         };
 
-        public IDomainObject ReadObjectRow(SqlDataReader reader)
+        public IEntity ReadObjectRow(SqlDataReader reader)
         {
             Automat a = new Automat();
             a.IdAutomat = reader.GetInt32(reader.GetOrdinal("idAutomat"));

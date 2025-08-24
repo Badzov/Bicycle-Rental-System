@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Lokacija : IDomainObject
+    public class Lokacija : IEntity
     {
         public int IdLokacija { get; set; }
         public string Naziv { get; set; }
@@ -31,7 +31,7 @@ namespace Domain
             { "opstina", Opstina },
         };
 
-        public IDomainObject ReadObjectRow(SqlDataReader reader)
+        public IEntity ReadObjectRow(SqlDataReader reader)
         {
             Lokacija l = new Lokacija();
             l.IdLokacija = reader.GetInt32(reader.GetOrdinal("idLokacija"));

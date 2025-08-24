@@ -23,15 +23,7 @@ namespace SystemOperations
             try
             {
                 List<Automat> automati = repository.GetAll(new Automat()).OfType<Automat>().ToList();
-
-                foreach (Automat automat in automati)
-                {
-                    if (automat.KorisnickoIme == a.KorisnickoIme && automat.Sifra == a.Sifra)
-                    {
-                        Result = automat;
-                        return;
-                    }
-                }
+                Validate(automati);
 
                 Result = null;
             }
@@ -39,6 +31,18 @@ namespace SystemOperations
             {
                 Debug.WriteLine($">>>>>>> System Operation {this.GetType()}  error: " + ex.Message);
                 throw new SystemOperationException("Sistem ne može da prijavi poslovnog partnera!");
+            }
+        }
+
+        private void Validate(List<Automat> automati)
+        {
+            foreach (Automat automat in automati)
+            {
+                if (automat.KorisnickoIme == a.KorisnickoIme && automat.Sifra == a.Sifra)
+                {
+                    Result = automat;
+                    return;
+                }
             }
         }
     }

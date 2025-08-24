@@ -177,7 +177,7 @@ namespace ApplicationLogic
             return ((VratiListuSviIznajmljivanjeSO)so).Result;
         }
 
-        private List<StavkaIznajmljivanja> VratiListuSviStavkaIznajmljivanja()
+        public List<StavkaIznajmljivanja> VratiListuSviStavkaIznajmljivanja()
         {
             SystemOperationBase so = new VratiListuSviStavkaIznajmljivanjaSO();
             so.ExecuteTemplate();

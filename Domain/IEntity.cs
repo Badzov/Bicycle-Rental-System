@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public interface IDomainObject
+    public interface IEntity
     {
         string TableName { get; }
         string InsertColumns { get; }     
@@ -17,6 +17,6 @@ namespace Domain
         Dictionary<string, object> Parameters { get; }
         Dictionary<string, object> SearchableProperties { get; }
 
-        IDomainObject ReadObjectRow(SqlDataReader reader);
+        IEntity ReadObjectRow(SqlDataReader reader);
     }
 }

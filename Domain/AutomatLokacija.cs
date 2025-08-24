@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class AutomatLokacija : IDomainObject
+    public class AutomatLokacija : IEntity
     {
         public Automat Automat { get; set; }
         public Lokacija Lokacija { get; set; }
@@ -32,7 +32,7 @@ namespace Domain
             
         };
 
-        public IDomainObject ReadObjectRow(SqlDataReader reader)
+        public IEntity ReadObjectRow(SqlDataReader reader)
         {
             AutomatLokacija al = new AutomatLokacija();
             al.idAutomat = reader.GetInt32(reader.GetOrdinal("idAutomat"));
